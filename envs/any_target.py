@@ -47,7 +47,7 @@ class AnyTargetEnv(gym.Env):
             Actions.DOWN.value:     [0.0,   -self.force_mag],  # -y
         }
 
-        # Set observation space x, x', y, y'
+        # Set observation space x, x', y, y' (agent), x,y (target)
         self.low_obs = np.array([0.,-self.vel_max,0.,-self.vel_max],dtype=np.float32,)
         self.high_obs = np.array([self.x_size,self.vel_max,self.y_size,self.vel_max],dtype=np.float32,)
         self.observation_space = gym.spaces.Dict(
