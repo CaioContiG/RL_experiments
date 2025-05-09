@@ -84,7 +84,7 @@ class AnyTargetEnv(gym.Env):
         y_dot = np.clip(y_dot + self.tau * force_y, -self.vel_max, self.vel_max)
 
         # Update state
-        self._agent = np.array((x, x_dot, y, y_dot), dtype=np.float64)
+        self._agent = np.array((x, x_dot, y, y_dot), dtype=np.float32)
         self._agent_location = np.array([x,y]) # self._agent could be used, this variable is only for conveniance
         self._target_location = np.array([x_target,y_target]) # Not necessary, only for modifications where target is moving
 

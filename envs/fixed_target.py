@@ -79,7 +79,7 @@ class FixedTargetEnv(gym.Env):
         y_dot = np.clip(y_dot + self.tau * force_y, -self.vel_max, self.vel_max)
 
         # Update state and agent with new position and velocity
-        self.state = np.array((x, x_dot, y, y_dot), dtype=np.float64)
+        self.state = np.array((x, x_dot, y, y_dot), dtype=np.float32)
         self._agent_location = np.array([self.state[0],self.state[2]])
 
         # Initialize terminated flag
