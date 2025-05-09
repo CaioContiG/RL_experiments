@@ -1,11 +1,13 @@
-from typing import Optional
+"""
+Continuous 2D agent with target anywhere implemented by Caio Conti
+Based on https://gymnasium.farama.org/tutorials/gymnasium_basics/environment_creation/
+And https://gymnasium.farama.org/environments/classic_control/cart_pole/
+"""
 import numpy as np
 import time
 import gymnasium as gym
 import pygame
-import pickle
 from enum import Enum
-import matplotlib.pyplot as plt
 
 class Actions(Enum):
     RIGHT = 0
@@ -131,7 +133,7 @@ class AnyTargetEnv(gym.Env):
     def _get_obs(self):
         return {"agent": self._agent, "target": self._target}
 
-    def reset(self, seed: Optional[int] = None):
+    def reset(self, seed = None, options=None):
         super().reset(seed=seed)      
         self._agent = self.np_random.uniform(low=self.low_start,high=self.high_start , size=(4,)).astype(np.float32) # Create agent with random state
         self._target = self.np_random.uniform(low = np.array([0,0]),high=np.array([self.size,self.size])).astype(np.float32) # Create target with random state

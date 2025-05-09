@@ -3,14 +3,11 @@ Continuous 2D agent with fixed target implemented by Caio Conti
 Based on https://gymnasium.farama.org/tutorials/gymnasium_basics/environment_creation/
 And https://gymnasium.farama.org/environments/classic_control/cart_pole/
 """
-from typing import Optional
 import numpy as np
 import time
 import gymnasium as gym
 import pygame
-import pickle
 from enum import Enum
-import matplotlib.pyplot as plt
 
 class Actions(Enum):
     RIGHT = 0
