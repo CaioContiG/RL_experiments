@@ -131,7 +131,8 @@ class AnyTargetEnv(gym.Env):
     def _get_obs(self):
         return {"agent": self._agent, "target": self._target}
 
-    def reset(self):        
+    def reset(self, seed: Optional[int] = None):
+        super().reset(seed=seed)       
         self._agent = self.np_random.uniform(low=self.low_start,high=self.high_start , size=(4,)) # Create agent with random state
         self._target = self.np_random.uniform(low = np.array([0,0]),high=np.array([self.size,self.size])) # Create target with random state
         self.step_max = 200 # Set max number of steps  

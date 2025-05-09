@@ -122,7 +122,8 @@ class FixedTargetEnv(gym.Env):
         # Return information
         return self.state, reward, terminated, False, {}
 
-    def reset(self):
+    def reset(self, seed: Optional[int] = None):
+        super().reset(seed=seed)
         self.state = self.np_random.uniform(low=self.low_start,high=self.high_start , size=(4,)) # Create agent with random state        
         self._agent_location = np.array([self.state[0],self.state[2]]) # Update agent location        
         self.step_max = 200 # Set max number of steps
