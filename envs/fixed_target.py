@@ -3,7 +3,7 @@ Continuous 2D agent with fixed target implemented by Caio Conti
 Based on https://gymnasium.farama.org/tutorials/gymnasium_basics/environment_creation/
 And https://gymnasium.farama.org/environments/classic_control/cart_pole/
 """
-
+from typing import Optional
 import numpy as np
 import time
 import gymnasium as gym
@@ -124,7 +124,7 @@ class FixedTargetEnv(gym.Env):
 
     def reset(self, seed: Optional[int] = None):
         super().reset(seed=seed)
-        self.state = self.np_random.uniform(low=self.low_start,high=self.high_start , size=(4,)) # Create agent with random state        
+        self.state = self.np_random.uniform(low=self.low_start, high=self.high_start, size=(4,)).astype(np.float32) # Create agent with random state        
         self._agent_location = np.array([self.state[0],self.state[2]]) # Update agent location        
         self.step_max = 200 # Set max number of steps
 
