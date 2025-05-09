@@ -26,12 +26,12 @@ class FixedTargetEnv(gym.Env):
         self.size = size # Square environment
         self.x_size = self.size
         self.y_size = self.size
-        self.vel_max = 1.0 # Max agent velocity
+        self.vel_max = 1.5 # Max agent velocity
         self.tau = 0.05 # seconds between state updates
         self.force_mag = 2.0 # Magnitude of the force vector
         self._target_location = np.array([5.,5.]) # Choose fixed target location
-        self.low_start = np.array([2, -0.05, 2, -0.05]) # Lower bound for the agent to spawn
-        self.high_start = np.array([size-2, 0.05, size-2, 0.05]) # Upper bound for the agent to spawn
+        self.low_start = np.array([1., -0.1, 1., -0.1]) # Lower bound for the agent to spawn
+        self.high_start = np.array([size-1, 0.1, size-1, 0.1]) # Upper bound for the agent to spawn
 
         # Graphics Configs
         self.window_size = 512  # The size of the PyGame window
@@ -62,10 +62,10 @@ class FixedTargetEnv(gym.Env):
         #self._agent_location = np.array([self.state[0],self.state[2]])
         #self._target_location = np.array([5.,5.])
 
-    def step(self, action: np.ndarray):
+    def step(self, action):
         
         # Getting action and current observed state
-        force_x, force_y = self.action_to_force[action]   
+        force_x, force_y = self.action_to_force[int(action)]   
         x, x_dot, y, y_dot = self.state
 
         """
@@ -122,8 +122,9 @@ class FixedTargetEnv(gym.Env):
         # Return information
         return self.state, reward, terminated, False, {}
 
-    def reset(self, seed: Optional[int] = None):
+    def reset(self, seed = None, options=None):
         super().reset(seed=seed)
+        
         self.state = self.np_random.uniform(low=self.low_start, high=self.high_start, size=(4,)).astype(np.float32) # Create agent with random state        
         self._agent_location = np.array([self.state[0],self.state[2]]) # Update agent location        
         self.step_max = 200 # Set max number of steps
@@ -184,4 +185,3 @@ class FixedTargetEnv(gym.Env):
         if self.window is not None:
             pygame.display.quit()
             pygame.quit()
-

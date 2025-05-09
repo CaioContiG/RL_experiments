@@ -15,13 +15,13 @@ class Actions(Enum):
 
 class AnyTargetEnv(gym.Env):
     metadata = {"render_modes": ["human", "rgb_array"], "render_fps": 30}
-    def __init__(self, render_mode=None, size: int = 5):        
+    def __init__(self, render_mode=None, size: int = 10):        
         
         # Parameters
         self.size = size # Square environment
         self.x_size = self.size
         self.y_size = self.size
-        self.vel_max = 1.0 # Max agent velocity
+        self.vel_max = 1.5 # Max agent velocity
         self.tau = 0.05 # seconds between state updates
         self.force_mag = 2.0 # Magnitude of the force vector
         self.low_start = np.array([1, -0.1, 1, -0.1]) # Lower bound for the agent to spawn
@@ -64,10 +64,10 @@ class AnyTargetEnv(gym.Env):
         #self._agent = self.np_random.uniform(low=self.low_start,high=self.high_start , size=(4,))
         #self._target = self.np_random.uniform(low = np.array([1,1]),high=np.array([4,4]))
 
-    def step(self, action: np.ndarray):
+    def step(self, action):
         
         # Getting action and current observed state
-        force_x, force_y = self.action_to_force[action]   
+        force_x, force_y = self.action_to_force[int(action)]   
         
         # Current state
         x, x_dot, y, y_dot = self._agent
@@ -132,9 +132,9 @@ class AnyTargetEnv(gym.Env):
         return {"agent": self._agent, "target": self._target}
 
     def reset(self, seed: Optional[int] = None):
-        super().reset(seed=seed)       
-        self._agent = self.np_random.uniform(low=self.low_start,high=self.high_start , size=(4,)) # Create agent with random state
-        self._target = self.np_random.uniform(low = np.array([0,0]),high=np.array([self.size,self.size])) # Create target with random state
+        super().reset(seed=seed)      
+        self._agent = self.np_random.uniform(low=self.low_start,high=self.high_start , size=(4,)).astype(np.float32) # Create agent with random state
+        self._target = self.np_random.uniform(low = np.array([0,0]),high=np.array([self.size,self.size])).astype(np.float32) # Create target with random state
         self.step_max = 200 # Set max number of steps  
         self._agent_location = np.array([self._agent[0],self._agent[2]]) # Update agent location        
         self._target_location = np.array([self._target[0],self._target[1]]) # Update agent location  
