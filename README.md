@@ -1,4 +1,4 @@
-# RL-tests
+# Reinforcement Learning Experiments
 
 This repository contains reinforcement learning (RL) experiments and exercises, with a focus on creating and solving custom environments tailored for robotic learning and social navigation.
 
@@ -46,11 +46,6 @@ To apply Q-learning to the Fixed Target and Any Target environments, discretizat
 ### DQN
 
 We use a Deep Q-Network (DQN) implementation based on the [Stable-Baselines3](https://github.com/DLR-RM/stable-baselines3) library to solve all environments, including the socially-aware one. Unlike basic Q-learning, DQN uses a neural network to approximate the Q-function, making it more suitable for environments with continuous or high-dimensional state spaces. It consistently achieves better results than Q-learning, especially in more complex tasks like socially-aware navigation.
-
-#### Compatible Environments
-- `Fixed Target`
-- `Any Target`
-- `Social Environment`
 
 #### Running DQN Training
 
