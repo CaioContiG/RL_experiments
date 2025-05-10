@@ -114,9 +114,6 @@ def plot_results(option):
     plt.show()
 
 if __name__ == "__main__":
-    results = load_results('./logs/training')
-    x, y = ts2xy(results, 'timesteps')
-    plot_results("training")
     if ENVIRONMENT in env_classes:
         env = env_classes[ENVIRONMENT](render_mode=RENDERING)
     else:
