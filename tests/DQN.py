@@ -1,6 +1,7 @@
 """
 DQN from stable-baselines3: https://stable-baselines3.readthedocs.io/en/master/modules/dqn.html#stable_baselines3.dqn.MlpPolicy
-Configured to solve the environments
+Configured to solve the environments.
+By Caio Conti
 """
 
 import os, sys
@@ -25,11 +26,12 @@ from stable_baselines3.common.results_plotter import load_results, ts2xy
 
 from envs.fixed_target import FixedTargetEnv
 from envs.any_target import AnyTargetEnv
+from envs.dynamic_people import SocialEnv
 
 # SELECT PARAMETERS
-ENVIRONMENT = "any"     # 'fixed', 'any' or 'social'
-RENDERING = True       # True to render simulation for visualization
-TRAINING = False         # True to train, false to load model for testing
+ENVIRONMENT = "social"     # 'fixed', 'any' or 'social'
+RENDERING = False       # True to render simulation for visualization
+TRAINING = True         # True to train, false to load model for testing
 N_TIMESTEPS = 300000    # Number of timesteps
 N_TESTS = 100           # Number of episodes to test, when testing
 
@@ -37,7 +39,7 @@ N_TESTS = 100           # Number of episodes to test, when testing
 env_classes = {
     "fixed": FixedTargetEnv,
     "any": AnyTargetEnv,
-    "social": FixedTargetEnv,
+    "social": SocialEnv,
 }
 
 def train_dqn(env,n_steps):
@@ -61,7 +63,7 @@ def train_dqn(env,n_steps):
         batch_size=32, 
         gamma=0.99,
         learning_rate=12e-5,
-        exploration_fraction=0.4,
+        exploration_fraction=0.5,
         exploration_final_eps=0.1
     )
 
@@ -112,6 +114,9 @@ def plot_results(option):
     plt.show()
 
 if __name__ == "__main__":
+    results = load_results('./logs/training')
+    x, y = ts2xy(results, 'timesteps')
+    plot_results("training")
     if ENVIRONMENT in env_classes:
         env = env_classes[ENVIRONMENT](render_mode=RENDERING)
     else:
